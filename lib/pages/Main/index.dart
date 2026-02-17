@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:hm_store_app/pages/Cart/index.dart';
+import 'package:hm_store_app/pages/Category/index.dart';
+import 'package:hm_store_app/pages/Home/index.dart';
+import 'package:hm_store_app/pages/Mine/index.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -8,6 +13,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  int _currentIdx = 0;
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> _tabList = [
@@ -34,14 +40,36 @@ class _MainPageState extends State<MainPage> {
     ];
     List<BottomNavigationBarItem> items = _tabList.map((item) {
       return BottomNavigationBarItem(
-        icon: Image.asset(item['icon']!, width: 24, height: 24),
-        activeIcon: Image.asset(item['active_icon']!, width: 24, height: 24),
+        icon: Image.asset(item['icon']!, width: 30, height: 30),
+        activeIcon: Image.asset(item['active_icon']!, width: 30, height: 30),
         label: item['text'],
       );
     }).toList();
+    List<Widget> _getChildren(){
+      return [
+        HomeView(), 
+        CategoryView(), 
+        CartView(), 
+        MineView()
+      ];
+    }
     return Scaffold(
-      body: Center(child: Text('Main Page')),
-      bottomNavigationBar: BottomNavigationBar(items: items),
+      body: SafeArea(child:IndexedStack(
+        index: _currentIdx,
+        children: _getChildren(),
+      )),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Color(0xFF000000),
+        unselectedItemColor: Color(0xFF000000),
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIdx,
+        onTap: (value) {
+          _currentIdx = value;
+          setState(() {});
+        },
+        items: items,
+      ),
     );
   }
 }
