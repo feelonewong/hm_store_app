@@ -10,6 +10,11 @@ class HmSlider extends StatefulWidget {
 class _HmSliderState extends State<HmSlider> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      height: 300,
+      alignment: Alignment(0, 0),
+      decoration: BoxDecoration(color: Colors.black),
+      child: Text("轮播图", style: TextStyle(color: Colors.white, fontSize: 20)),
+    );
   }
 }

@@ -10,6 +10,14 @@ class HmSuggestion extends StatefulWidget {
 class _HmSuggestionState extends State<HmSuggestion> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: Container(
+        height: 200,
+        alignment: Alignment(0, 0),
+        decoration: BoxDecoration(color: Colors.blue),
+        child: Text('推荐', style: TextStyle(color: Colors.white, fontSize: 24)),
+      ),
+    );
   }
 }
