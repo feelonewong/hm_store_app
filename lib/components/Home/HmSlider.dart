@@ -14,23 +14,28 @@ class _HmSliderState extends State<HmSlider> {
   final CarouselSliderController _sliderController = CarouselSliderController();
   int _currentIndex = 0;
   Widget _getSlider() {
-    double screenWidth = MediaQuery.of(context).size.width;
-    return CarouselSlider(
-      carouselController: _sliderController,
-      items: List.generate(widget.bannerList.length, (int index) {
-        return Image.network(
-          widget.bannerList[index].imgUrl,
-          width: screenWidth,
-        );
-      }),
-      options: CarouselOptions(
-        onPageChanged: (int index, reason) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        autoPlay: true,
-        viewportFraction: 1,
+    return SizedBox(
+      width: double.infinity,
+      child: CarouselSlider(
+        carouselController: _sliderController,
+        items: widget.bannerList.map((item) {
+          return SizedBox.expand(
+            child: Image.network(
+              item.imgUrl,
+              fit: BoxFit.cover, // 关键点：铺满
+            ),
+          );
+        }).toList(),
+        options: CarouselOptions(
+          height: 240, //
+          viewportFraction: 1,
+          autoPlay: true,
+          onPageChanged: (int index, reason) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }

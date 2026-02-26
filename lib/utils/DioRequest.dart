@@ -44,6 +44,7 @@ class DioRequest {
       Response<dynamic> res = await task;
       final data = res.data as Map<String, dynamic>;
       if (data["code"] == GlobalConstants.SUCCESS_CODE) {
+        // 注意这里返回的仅仅是resulut，没有把整个数据体给返回
         return data["result"];
       } else {
         throw Exception(data["msg"] ?? "加载异常");
