@@ -48,9 +48,22 @@ class _HmSuggestionState extends State<HmSuggestion> {
 
   // 获取数据
   List<GoodsItem> _getDisplayItems() {
-    return widget.specialRecommendResult.subTypes.first.goodsItems.items
-        .take(3)
-        .toList();
+    // return widget.specialRecommendResult.subTypes.first.goodsItems.items
+    //     .take(3)
+    //     .toList();
+    final subTypes = widget.specialRecommendResult.subTypes;
+
+    if (subTypes.isEmpty) {
+      return [];
+    }
+
+    final items = subTypes.first.goodsItems.items;
+
+    if (items.isEmpty) {
+      return [];
+    }
+
+    return items.take(3).toList();
   }
 
   List<Widget> _getChildrenList() {
@@ -60,14 +73,35 @@ class _HmSuggestionState extends State<HmSuggestion> {
       return Column(
         children: [
           Container(
-            width: 100,
-            height: 140,
+            width: 80,
+            height: 100,
             decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage(''))
+              image: DecorationImage(
+                image: NetworkImage(item.picture),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SizedBox(height: 10),
-          // Container(child: Text(item.name)),
+          Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.red,
+            ),
+            width: 80,
+            child: Text(
+              '\$:${item.price}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                fontSize: 12,
+              ),
+            ),
+          ),
         ],
       );
     });
@@ -96,7 +130,13 @@ class _HmSuggestionState extends State<HmSuggestion> {
             Row(
               children: [
                 _builderLeft(),
-                Expanded(child: Row(children: _getChildrenList())),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: _getChildrenList(),
+                  ),
+                ),
               ],
             ),
           ],
